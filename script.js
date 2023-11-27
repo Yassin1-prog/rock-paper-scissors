@@ -1,9 +1,26 @@
-let check = 2;
-
+let bot = 0;
+let human = 0;
+const you = document.querySelector('#you');
+const enemy = document.querySelector('#enemy');
+const result = document.querySelector('#result');
+const round = document.querySelector('#round');
+let finished = false;
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function declareWInner() {
+    if(human == 5) {
+        result.textContent = 'You Won the Game!!';
+        finished = true;
+    }
+    else if(bot == 5) {
+        result.textContent= 'You Lost the Game!!';
+        finished = true;
+    }
+}
+
 
 function getComputerChoice() {
     let randomNumber = getRandomInt(0,100);
@@ -20,65 +37,105 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
+    if(finished) {
+        return;
+    }
     if(playerSelection.toLowerCase() == "rock") {
         if(computerSelection.toLowerCase() == "rock") {
-            check = 2;
-            return "Its a tie! rock ties with rock";
+            
+            round.textContent = "Its a tie! rock ties with rock";
 
         }
         else if(computerSelection.toLowerCase() == "scissors") {
-            check = 1;
-            return "You Won! rock beats scissors";
+            human++;
+            you.textContent = 'You: ' + human;
+            declareWInner();
+            round.textContent = "You Won! rock beats scissors";
 
         }
         else {
-            check = 0;
-            return "You lost! paper beats rock";
+            bot++;
+            enemy.textContent = 'Computer: ' + bot;
+            declareWInner();
+            round.textContent = "You lost! paper beats rock";
 
         }
     }
     if(playerSelection.toLowerCase() == "paper") {
         if(computerSelection.toLowerCase() == "rock") {
-            check = 1;
-
-            return "You Won! paper beats rock";
+            human++;
+            you.textContent = 'You: ' + human;
+            declareWInner();
+            round.textContent = "You Won! paper beats rock";
         }
         else if(computerSelection.toLowerCase() == "scissors") {
-            check = 0;
-            return "You lost! scissors beats paper";
+            bot++;
+            enemy.textContent = 'Computer: ' + bot;
+            declareWInner();
+            round.textContent = "You lost! scissors beats paper";
 
         }
         else {
-            check = 2;
-            return "Its a tie! paper ties with paper";
+            
+            round.textContent = "Its a tie! paper ties with paper";
 
         }
     }
     if(playerSelection.toLowerCase() == "scissors") {
         if(computerSelection.toLowerCase() == "rock") {
-            check = 0;
-            return "You lost rock beats scissors";
+            bot++;
+            enemy.textContent = 'Computer: ' + bot;
+            declareWInner();
+            round.textContent = "You lost rock beats scissors";
 
         }
         else if(computerSelection.toLowerCase() == "scissors") {
-            check = 2;
-            return "Its a tie! scissors ties with scissors";
+           
+            round.textContent = "Its a tie! scissors ties with scissors";
 
         }
         else {
-            check = 1;
-            return "You won! scissors beats paper";
+            human++;
+            you.textContent = 'You: ' + human;
+            declareWInner();
+            round.textContent = "You won! scissors beats paper";
 
         }
     }
 
 }
 
+const btn1 = document.querySelector('#btn1');
+const btn2 = document.querySelector('#btn2');
+const btn3 = document.querySelector('#btn3');
+
+
+btn1.addEventListener('click', function() {
+    let opponet = getComputerChoice();
+    playRound('rock', opponet);
+});
+
+
+btn2.addEventListener('click', function() {
+    let opponet = getComputerChoice();
+    playRound('paper', opponet);
+});
+
+
+btn3.addEventListener('click', function() {
+    let opponet = getComputerChoice();
+    playRound('scissors', opponet);
+});
+
+
+
+
 /*
 const playerSelection = "rock";
 const computerSelection = getComputerChoice();
 console.log(playRound(playerSelection, computerSelection));
 */
+/*
 let bot = 0;
 let human = 0;
 function game() {
@@ -107,3 +164,4 @@ function game() {
 }
 
 game();
+*/
